@@ -1,4 +1,10 @@
 # Compiled class file
+# Created by .ignore support plugin (hsz.mobi)
+### Java template
+# Compiled class file
+.idea/
+target
+*.iml
 *.class
 
 # Log file

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.basicfu.system.mapper.ResourceMapper">
+    <resultMap id="BaseResultMap" type="com.basicfu.system.model.po.Resource">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="url" jdbcType="VARCHAR" property="url"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+    </resultMap>
+    <select id="selectasdf">
+        SELECT * FROM resource
+        <where>
+            <foreach collection="list" item="item" separator=" and ">
+                SUBSTRING_INDEX(REVERSE(SUBSTRING_INDEX(${item}, ',', 1)), ',',
+                1)=SUBSTRING_INDEX(REVERSE(SUBSTRING_INDEX(#{item}, ',', 2)), ',', 1)
+            </foreach>
+        </where>
+    </select>
+</mapper>
