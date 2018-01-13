@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 @Order(-1)
-@WebFilter(filterName = "permissionFilter2", urlPatterns =["/*"])
+@WebFilter(filterName = "systemPermissionFilter", urlPatterns =["/*"])
 class PermissionFilter : Filter {
 
     @Throws(ServletException::class)
@@ -27,16 +27,15 @@ class PermissionFilter : Filter {
     @Throws(IOException::class, ServletException::class)
     override fun doFilter(servletRequest: ServletRequest, servletResponse: ServletResponse, filterChain: FilterChain) {
         //开发期为了避免麻烦暂时关闭权限控制
-        val request = servletRequest as HttpServletRequest
-        val response = servletResponse as HttpServletResponse
-        val uri = request.requestURI
-        println("我是1$uri")
         var response1 = servletResponse as HttpServletResponse
         response1.setHeader("Access-Control-Allow-Origin", "*")
         response1.setHeader("Access-Control-Allow-Headers", "Authorization, Origin, X-Requested-With, Content-Type, Accept")
         response1.setHeader("Access-Control-Allow-Method", "GET, POST, PUT,DELETE")
         filterChain.doFilter(servletRequest, response1)
         return
+        val request = servletRequest as HttpServletRequest
+        val response = servletResponse as HttpServletResponse
+        val uri = request.requestURI
         var result = Result.error(Enum.INVALID_PERMISSION.value, Enum.INVALID_PERMISSION.msg)
         var authorization: String? =null
         if("/favicon.ico" == uri){
