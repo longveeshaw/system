@@ -99,3 +99,30 @@ create table user_role
 )
   comment '用户角色表' engine=InnoDB
 ;
+create table config
+(
+  id bigint auto_increment comment '主键'
+    primary key,
+  name varchar(255) not null comment '配置名',
+  value varchar(255) not null comment '配置值',
+  primary key (user_id, role_id)
+)
+  comment '系统配置表' engine=InnoDB
+;
+
+CREATE TABLE dict (
+  id bigint auto_increment comment '主键'
+    primary key,
+  name varchar(255) NOT NULL DEFAULT '' COMMENT '字典名',
+  type varchar(255) NOT NULL DEFAULT '' COMMENT '字典类型',
+  lft bigint NOT NULL DEFAULT '0' COMMENT '左节点',
+  rgt bigint NOT NULL DEFAULT '0' COMMENT '右节点',
+  lvl int NOT NULL DEFAULT '0' COMMENT '节点层级',
+  `status` int(1) NOT NULL DEFAULT '0' COMMENT '逻辑删除 1是 0否',
+  PRIMARY KEY (`id`),
+  KEY `type` (`type`),
+  KEY `lft` (`lft`),
+  KEY `rgt` (`rgt`),
+  KEY `status` (`status`)
+)
+  comment '字典表' engine=InnoDB;
