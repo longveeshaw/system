@@ -2,4 +2,4 @@ spring:
   cloud:
     config:
       profile: dev
-      uri: http://dmka:6900/
+      uri: http://dmka.cn:6900/

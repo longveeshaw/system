@@ -1,52 +1,49 @@
-package com.basicfu.system.util;
+package com.basicfu.system.util
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * @author fuliang
  * @date 12/5/2016
  */
-public class SmsUtil {
-    public static void main(String[] args) throws IOException {
+object SmsUtil {
+    @Throws(IOException::class)
+    @JvmStatic
+    fun main(args: Array<String>) {
 
-            send("18611331161");
-//        params.put("simplify",true);
+        send("18611331161")
+        //        params.put("simplify",true);
     }
 
-    public static void send(String recNum){
-//        String smscode = String.valueOf((int) ((Math.random() * 9 + 1) * 100000));//随机6位验证码
-        String SIGN_METHOD="hmac";
-        Map params=new HashMap<String,String>();
-        params.put("method","alibaba.aliqin.fc.sms.num.send");
-        params.put("app_key","23542706");
-        params.put("sign_method",SIGN_METHOD);
-        params.put("timestamp",new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
-        params.put("format","json");
-        params.put("v","2.0");
+    fun send(recNum: String) {
+        //        String smscode = String.valueOf((int) ((Math.random() * 9 + 1) * 100000));//随机6位验证码
+        val SIGN_METHOD = "hmac"
+        val params = HashMap<String, String>()
+        params.put("method", "alibaba.aliqin.fc.sms.num.send")
+        params.put("app_key", "23542706")
+        params.put("sign_method", SIGN_METHOD)
+        params.put("timestamp", SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Date()))
+        params.put("format", "json")
+        params.put("v", "2.0")
         //business params
-        params.put("extend","123");
-        params.put("sms_type","normal");
-        params.put("sms_free_sign_name","简游平台");
-        params.put("sms_param","{'code':123456}");
-        params.put("rec_num","18611331161");
-        params.put("sms_template_code","SMS_71580057");
+        params.put("extend", "123")
+        params.put("sms_type", "normal")
+        params.put("sms_free_sign_name", "简游平台")
+        params.put("sms_param", "{'code':123456}")
+        params.put("rec_num", "18611331161")
+        params.put("sms_template_code", "SMS_71580057")
         try {
-            String sign=TaobaoUtil.signTopRequest(params,"21e1602bf6d23acbc68e99a7b2ad59ef",SIGN_METHOD);
-            params.put("sign",sign);
-            String result=HttpUtil.INSTANCE.post("http://gw.api.taobao.com/router/rest",params);
-            System.out.println(result);
-        } catch (IOException e) {
+            val sign = TaobaoUtil.signTopRequest(params, "21e1602bf6d23acbc68e99a7b2ad59ef", SIGN_METHOD)
+            params.put("sign", sign)
+            val result = HttpUtil.post("http://gw.api.taobao.com/router/rest", params)
+            println(result)
+        } catch (e: IOException) {
         }
+
     }
 }
-
 
 
 //
