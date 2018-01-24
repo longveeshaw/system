@@ -10,10 +10,6 @@ import java.util.*
  * @date 2017/06/03
  */
 object MailUtil {
-    @JvmStatic
-    fun main(args: Array<String>) {
-        sendMail("hellowod测试")
-    }
 
     fun sendMail(subject: String, message: String) {
         sendMail("basicfu@gmail.com", subject, message)

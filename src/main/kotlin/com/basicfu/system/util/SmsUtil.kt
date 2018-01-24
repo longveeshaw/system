@@ -9,13 +9,6 @@ import java.util.*
  * @date 12/5/2016
  */
 object SmsUtil {
-    @Throws(IOException::class)
-    @JvmStatic
-    fun main(args: Array<String>) {
-
-        send("18611331161")
-        //        params.put("simplify",true);
-    }
 
     fun send(recNum: String) {
         //        String smscode = String.valueOf((int) ((Math.random() * 9 + 1) * 100000));//随机6位验证码
