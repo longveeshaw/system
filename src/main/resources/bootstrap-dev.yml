@@ -2,4 +2,4 @@ spring:
   cloud:
     config:
       profile: dev
-      uri: http://dmka.cn:6900/
+      uri: http://localhost:7900/

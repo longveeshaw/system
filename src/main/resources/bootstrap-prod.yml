@@ -2,4 +2,4 @@ spring:
   cloud:
     config:
       profile: prod
-      uri: http://localhost:6900/
+      uri: http://localhost:7900/
