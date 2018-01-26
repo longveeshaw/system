@@ -58,7 +58,7 @@ class ResourceService:BaseService<Resource>(Resource::class.java){
     fun delete(ids:List<Long>):Int{
         //resource是url当key所有要遍历
         if(ids.isNotEmpty()){
-            val resourceMap = RedisUtil.hGetAll(Constant.Redis.RESOURCE) as Map<String, Resource>
+            val resourceMap = RedisUtil.hGetAll(Constant.Redis.RESOURCE,Resource::class.java)
             resourceMap.values.forEach { e ->
                 if (ids.contains(e.id)) {
                     RedisUtil.hDel(Constant.Redis.RESOURCE, e.url!!)

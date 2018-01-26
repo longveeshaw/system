@@ -1,5 +1,7 @@
 package com.basicfu.common.util
 
+import com.alibaba.fastjson.JSONObject
+import com.alibaba.fastjson.support.spring.FastJsonRedisSerializer
 import org.springframework.data.redis.core.RedisTemplate
 import java.util.concurrent.TimeUnit
 
@@ -17,6 +19,13 @@ object RedisUtil {
 
     fun get(k: Any): Any? {
         return redisTemplate.opsForValue().get(k)
+    }
+
+    fun <T> get(k: Any, clazz: Class<T>): T? {
+        redisTemplate.opsForValue().get(k)?.let {
+            return (it as JSONObject).toJavaObject(clazz)
+        }
+        return null
     }
 
     fun set(key: Any, value: Any, expireTime: Long) {
@@ -37,10 +46,10 @@ object RedisUtil {
     }
 
     fun hGet(key: Any, hk: Any): Any? {
-        return redisTemplate.opsForHash<Any, Any>().get(key, hk)
+        return redisTemplate.opsForHash<Any, Any>().get(key.toString(), hk.toString())
     }
 
-    fun hMSet(key: String, dataMap: Map<*, *>) {
+    fun <T> hMSet(key: String, dataMap: Map<String, T>) {
         redisTemplate.opsForHash<Any, Any>().putAll(key, dataMap)
     }
 
@@ -49,8 +58,9 @@ object RedisUtil {
         expire(key, expireTime)
     }
 
-    fun hGetAll(key: Any): Map<Any, Any> {
-        return redisTemplate.opsForHash<Any, Any>().entries(key)
+    fun <T> hGetAll(key: Any,clazz: Class<T>): Map<Any, T> {
+        redisTemplate.hashValueSerializer=FastJsonRedisSerializer(clazz)
+        return redisTemplate.opsForHash<Any, T>().entries(key)
     }
 
     fun hDel(key: Any, hk: Any) {

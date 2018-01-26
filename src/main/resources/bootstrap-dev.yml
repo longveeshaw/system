@@ -1,9 +1,9 @@
 spring:
   cloud:
     config:
-      profile: dev
-      uri: http://localhost:7900/
+      profile: prod
+      uri: http://dmka.cn:7900/
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:7100/eureka/
+      defaultZone: http://dmka.cn:7100/eureka/

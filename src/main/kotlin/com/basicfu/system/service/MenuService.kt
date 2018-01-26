@@ -10,7 +10,6 @@ import com.basicfu.system.model.vo.MenuVo
 import com.basicfu.common.util.RedisUtil
 import com.github.pagehelper.PageInfo
 import org.springframework.beans.BeanUtils
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 /**
@@ -23,9 +22,8 @@ class MenuService : BaseService<Menu>(Menu::class.java) {
      * 当设置为访客无法访问此接口，既该token不可能为空
      */
     fun rlist(token:String?): List<Any> {
-        val tokenObj = RedisUtil.get(Constant.Redis.TOKEN + token)
-        if(tokenObj!=null) {
-            val token = tokenObj as Token
+        val token = RedisUtil.get(Constant.Redis.TOKEN + token,Token::class.java)
+        if(token!=null) {
             val menus=selectByIds(token.menus)
             val result = arrayListOf<MenuDto>()
             menus.sortBy { it.pid }
