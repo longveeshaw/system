@@ -5,3 +5,20 @@ spring:
     name: system
   profiles:
     active: dev
+  output:
+    ansi:
+      enabled: always
+  mvc:
+    throw-exception-if-no-handler-found: true
+  resources:
+    add-mappings: false
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+mapper:
+  mappers:
+      - com.basicfu.system.common.CustomMapper
+  not-empty: false
+  identity: MYSQL
