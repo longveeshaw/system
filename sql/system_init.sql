@@ -91,6 +91,18 @@ INSERT INTO `menu` VALUES ('10002', '10000', '角色管理', '/system/role', '2'
 INSERT INTO `menu` VALUES ('10003', '10000', '权限管理', '/system/permission', '3', 'tag-o');
 INSERT INTO `menu` VALUES ('10004', '10000', '资源管理', '/system/resource', '4', 'shop');
 INSERT INTO `menu` VALUES ('10005', '10000', '菜单管理', '/system/menu', '5', 'menu-fold');
+INSERT INTO `menu` VALUES ('10006', '10000', '字典配置', '/system/dict', '6', 'menu-fold');
+INSERT INTO `menu` VALUES ('10100', '0', '首页', '/home', '2', 'menu-fold');
+INSERT INTO `menu` VALUES ('10200', '0', '职位管理', '/position', '3', 'menu-fold');
+INSERT INTO `menu` VALUES ('10300', '0', '简历库', '/resume', '4', 'menu-fold');
+INSERT INTO `menu` VALUES ('10400', '0', '客户管理', '/customer', '5', 'menu-fold');
+INSERT INTO `menu` VALUES ('10500', '0', '外包管理', '/entryRecord', '6', 'menu-fold');
+INSERT INTO `menu` VALUES ('10600', '0', '账户管理', '/account', '7', 'menu-fold');
+INSERT INTO `menu` VALUES ('10700', '0', '职位概况', '/positionView', '8', 'menu-fold');
+INSERT INTO `menu` VALUES ('10800', '0', '简历管理', '/positionResume', '9', 'menu-fold');
+INSERT INTO `menu` VALUES ('10900', '0', '面试排期', '/interviewSchedule', '10', 'menu-fold');
+INSERT INTO `menu` VALUES ('11000', '0', '职位详情', '/positionDetail', '11', 'menu-fold');
+INSERT INTO `menu` VALUES ('11100', '0', '入场管理', '/entry', '12', 'menu-fold');
 
 DELETE FROM `role_menu`;
 INSERT INTO `role_menu` VALUES ('1', '10000');
@@ -99,3 +111,18 @@ INSERT INTO `role_menu` VALUES ('1', '10002');
 INSERT INTO `role_menu` VALUES ('1', '10003');
 INSERT INTO `role_menu` VALUES ('1', '10004');
 INSERT INTO `role_menu` VALUES ('1', '10005');
+INSERT INTO `role_menu` VALUES ('1', '10006');
+INSERT INTO `role_menu` VALUES ('1', '10100');
+INSERT INTO `role_menu` VALUES ('1', '10200');
+INSERT INTO `role_menu` VALUES ('1', '10300');
+INSERT INTO `role_menu` VALUES ('1', '10400');
+INSERT INTO `role_menu` VALUES ('1', '10500');
+INSERT INTO `role_menu` VALUES ('1', '10600');
+INSERT INTO `role_menu` VALUES ('1', '10700');
+INSERT INTO `role_menu` VALUES ('1', '10800');
+INSERT INTO `role_menu` VALUES ('1', '10900');
+INSERT INTO `role_menu` VALUES ('1', '11000');
+INSERT INTO `role_menu` VALUES ('1', '11100');
+
+DELETE FROM dict;
+INSERT INTO dict VALUE ('1','根字典','',1,2,0,1,0)

@@ -48,8 +48,8 @@ enum class Enum constructor(val value: Int,val msg:String) {
         ID_PID_REPEAT(200,"父菜单不能是当前菜单"),
         EXIST_NAME(201,"菜单名已存在");
     }
-    enum class TableType constructor(val value: Int,val msg:String) {
-        EXIST_NAME(201,"表格类型名已存在"),
+    enum class Dict constructor(val value: Int,val msg:String) {
+        NOT_FOUND(201,"找不到字典"),
         ID_PID_REPEAT(202,"父类型不能是当前类型");
     }
     enum class TableWord constructor(val value: Int,val msg:String) {

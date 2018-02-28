@@ -1,5 +1,11 @@
-- 通知配置（邮件、短信）
-- 通知开关（哪些需要通知）
+create table config(
+  id bigint auto_increment comment '主键' primary key,
+  name varchar(255) not null comment '配置名',
+  value varchar(255) not null comment '配置值',
+  primary key (user_id, role_id)
+)comment '系统配置表' engine=InnoDB;
+## mybatis反向生成
+mvn mybatis-generator:generate
 - 层级字典配置（使用左右值算法）
 - 读写分离配置在配置文件中设置不需要修改代码
 - MQ BUS 更新配置

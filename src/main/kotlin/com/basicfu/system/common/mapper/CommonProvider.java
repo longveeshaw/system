@@ -31,4 +31,11 @@ public class CommonProvider extends MapperTemplate {
         sql.append("</foreach>");
         return sql.toString();
     }
+    public String updateCustomSql(MappedStatement ms){
+        Class<?> entityClass = getEntityClass(ms);
+        StringBuilder sql = new StringBuilder();
+        sql.append(SqlHelper.updateTable(entityClass, tableName(entityClass)));
+        sql.append("${sql}");
+        return sql.toString();
+    }
 }
