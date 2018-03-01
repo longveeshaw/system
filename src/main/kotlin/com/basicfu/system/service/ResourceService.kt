@@ -19,14 +19,14 @@ import org.springframework.stereotype.Service
 class ResourceService:BaseService<Resource>(Resource::class.java){
 
     fun list(vo:ResourceVo): PageInfo<Any> {
-        return selectOrLike(arrayListOf("id","name","url"),vo.keyword,vo.pageNum,vo.pageSize)
+        return selectPageDtoLike(arrayOf(arrayOf("id",vo.keyword), arrayOf("name",vo.keyword),arrayOf("url",vo.keyword)), vo.pageNum, vo.pageSize)
     }
     fun all():List<Any>{
-        return selectAllDto()
+        return selectDto()
     }
     fun insert(vo:ResourceVo):Int{
-        if(vo.id!=null&&selectCount("id",vo.id)>0)throw CustomException(Enum.Resource.EXIST_ID)
-        if(selectCount("url",vo.url)>0)throw CustomException(Enum.Resource.EXIST_URL)
+        if(vo.id!=null&&selectCountEqual(arrayOf("id",vo.id))>0)throw CustomException(Enum.Resource.EXIST_ID)
+        if(selectCountEqual(arrayOf("url",vo.url))>0)throw CustomException(Enum.Resource.EXIST_URL)
         val po=Resource()
         BeanUtils.copyProperties(vo,po)
         insertPoSelective(po)
@@ -35,7 +35,7 @@ class ResourceService:BaseService<Resource>(Resource::class.java){
     }
     fun update(vo:ResourceVo):Int{
         //更新url不能重复
-        val checkUrl = selectOne("url",vo.url)
+        val checkUrl = selectOne(arrayOf("url",vo.url))
         if(checkUrl!=null&&checkUrl.id!=vo.id)throw CustomException(Enum.Resource.EXIST_URL)
         val po=Resource()
         BeanUtils.copyProperties(vo,po)

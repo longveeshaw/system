@@ -14,5 +14,9 @@ class DictDto {
 
     var lvl: Int? = null
 
-    var isdel: Byte? = null
+    var pid: Long? = null
+
+    var fixed:Int?=null
+
+    var children:List<DictDto>?=null
 }

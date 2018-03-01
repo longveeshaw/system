@@ -25,7 +25,7 @@ class RoleService : BaseService<Role>(Role::class.java){
     @Autowired lateinit var rmMapper: RoleMenuMapper
 
     fun list(vo: RoleVo): PageInfo<Any> {
-        val result = selectOrLike(arrayListOf("id", "name"), vo.keyword, vo.pageNum, vo.pageSize)
+        val result = selectPageDtoLike(arrayOf(arrayOf("id",vo.keyword), arrayOf("name",vo.keyword)), vo.pageNum, vo.pageSize)
         val dtoList=result.list as List<RoleDto>
         if(dtoList.isNotEmpty()){
             val rids=dtoList.map { it.id }
@@ -39,12 +39,12 @@ class RoleService : BaseService<Role>(Role::class.java){
         return result
     }
 
-    fun all():List<Any> = selectAllDto()
+    fun all():List<Any> = selectDto()
     fun insert(vo: RoleVo):Int{
         if(vo.id!=null){
-            if(selectCount("id",vo.id)>0){throw CustomException(Enum.Role.EXIST_ID)}
+            if(selectCountEqual(arrayOf("id",vo.id))>0){throw CustomException(Enum.Role.EXIST_ID)}
         }
-        if(selectCount("name",vo.name)>0){throw CustomException(Enum.Role.EXIST_NAME)}
+        if(selectCountEqual(arrayOf("name",vo.name))>0){throw CustomException(Enum.Role.EXIST_NAME)}
         val po= Role()
         BeanUtils.copyProperties(vo,po)
         insertPoSelective(po)
@@ -67,7 +67,7 @@ class RoleService : BaseService<Role>(Role::class.java){
         return 1
     }
     fun update(vo: RoleVo):Int{
-        val checkRole=selectOne("name",vo.name)
+        val checkRole=selectOne(arrayOf("name",vo.name))
         if(checkRole!=null&&checkRole.id!=vo.id){
             throw CustomException(Enum.Role.EXIST_NAME)
         }

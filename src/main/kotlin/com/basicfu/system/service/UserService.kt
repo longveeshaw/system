@@ -34,7 +34,7 @@ class UserService : BaseService<User>(User::class.java){
     @Autowired lateinit var prMapper: PermissionResourceMapper
 
     fun login(vo:UserVo):Any{
-        val user = selectOne("username", vo.username) ?: throw CustomException(Enum.User.NOT_FOUND_USER)
+        val user = selectOne(arrayOf("username", vo.username)) ?: throw CustomException(Enum.User.NOT_FOUND_USER)
         val checkPassword = PasswordUtil.checkPassword(vo.username!!, vo.password!!, user.password!!, user.salt!!)
         if(!checkPassword)throw CustomException(Enum.User.INVALID_PASSWORD)
         val result=JSONObject()
@@ -59,7 +59,7 @@ class UserService : BaseService<User>(User::class.java){
         RedisUtil.del("${Constant.Redis.TOKEN}$token")
     }
     fun list(vo: UserVo): PageInfo<Any> {
-        val result=selectOrLike(arrayListOf("id","username","mobile"),vo.keyword,vo.pageNum,vo.pageSize)
+        val result = selectPageDtoLike(arrayOf(arrayOf("id",vo.keyword), arrayOf("username",vo.keyword), arrayOf("mobile",vo.keyword)), vo.pageNum, vo.pageSize)
         val ur= UserRole()
         result.list.forEach { e->
             e as UserDto
@@ -71,8 +71,8 @@ class UserService : BaseService<User>(User::class.java){
     }
 
     fun insert(vo: UserVo):Int{
-        if(selectCount("username",vo.username)>0){throw CustomException(Enum.User.EXIST_USER)}
-        if(selectCount("mobile",vo.mobile)>0){throw CustomException(Enum.User.EXIST_MOBILE)}
+        if(selectCountEqual(arrayOf("username",vo.username))>0){throw CustomException(Enum.User.EXIST_USER)}
+        if(selectCountEqual(arrayOf("mobile",vo.mobile))>0){throw CustomException(Enum.User.EXIST_MOBILE)}
         val po=User()
         BeanUtils.copyProperties(vo,po)
         po.cdate= Utils.currentTimeSecond()
@@ -93,7 +93,7 @@ class UserService : BaseService<User>(User::class.java){
         return 1
     }
     fun update(vo: UserVo):Int{
-        val checkUser=selectOne("mobile",vo.mobile)
+        val checkUser=selectOne(arrayOf("mobile",vo.mobile))
         if(checkUser!=null&&checkUser.id!=vo.id){
             throw CustomException(Enum.User.EXIST_MOBILE)
         }

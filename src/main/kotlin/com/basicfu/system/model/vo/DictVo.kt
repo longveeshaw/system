@@ -30,6 +30,24 @@ class DictVo:BaseVo() {
         if (name == null) {
             result.put("name", "name不能为空")
         }
+        if (fixed == null) {
+            result.put("fixed", "fixed不能为空")
+        }
+        if (result.size > 0) {
+            throw CustomException(Enum.MISSING_PARAMETER, result)
+        }
+    }
+    fun verfiyUpdate() {
+        val result = JSONObject()
+        if (id == null) {
+            result.put("id", "id不能为空")
+        }
+        if (name == null) {
+            result.put("name", "name不能为空")
+        }
+        if (fixed == null) {
+            result.put("fixed", "fixed不能为空")
+        }
         if (result.size > 0) {
             throw CustomException(Enum.MISSING_PARAMETER, result)
         }

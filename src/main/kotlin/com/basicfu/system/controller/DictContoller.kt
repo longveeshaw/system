@@ -15,13 +15,14 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/dict")
 class DictContoller {
-    @Autowired lateinit var dictService: DictService
+    @Autowired
+    lateinit var dictService: DictService
 
-//    @GetMapping("/list")
-//    fun list(vo: RoleVo): Result {
-//        return Result.success(roleService.list(vo))
-//    }
-//
+    @GetMapping("/list")
+    fun list(vo: DictVo): Result {
+        return Result.success(dictService.list(vo))
+    }
+
     @GetMapping("/all")
     fun all(): Result {
         return Result.success(dictService.all())
@@ -34,16 +35,16 @@ class DictContoller {
         return Result.insert
     }
 
-//    @PostMapping("/update")
-//    fun update(@RequestBody vo: RoleVo): Result {
-//        vo.verfiyUpdate()
-//        roleService.update(vo)
-//        return Result.update
-//    }
-//
-//    @DeleteMapping("/delete")
-//    fun delete(@RequestBody ids:List<Long>): Result {
-//        roleService.delete(ids)
-//        return Result.delete
-//    }
+        @PostMapping("/update")
+    fun update(@RequestBody vo: DictVo): Result {
+        vo.verfiyUpdate()
+        dictService.update(vo)
+        return Result.update
+    }
+
+    @DeleteMapping("/delete")
+    fun delete(@RequestBody ids: List<Long>): Result {
+        dictService.delete(ids)
+        return Result.delete
+    }
 }

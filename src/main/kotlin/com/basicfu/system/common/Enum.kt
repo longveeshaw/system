@@ -50,7 +50,8 @@ enum class Enum constructor(val value: Int,val msg:String) {
     }
     enum class Dict constructor(val value: Int,val msg:String) {
         NOT_FOUND(201,"找不到字典"),
-        ID_PID_REPEAT(202,"父类型不能是当前类型");
+        ID_PID_REPEAT(202,"父类型不能是当前类型"),
+        NO_DELETE_ROOT(202,"不能删除根字典"),
     }
     enum class TableWord constructor(val value: Int,val msg:String) {
         EXIST_NAME(201,"同类型下的文字表格名不能重复"),

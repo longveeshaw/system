@@ -125,4 +125,4 @@ INSERT INTO `role_menu` VALUES ('1', '11000');
 INSERT INTO `role_menu` VALUES ('1', '11100');
 
 DELETE FROM dict;
-INSERT INTO dict VALUE ('1','根字典','',1,2,0,1,0)
+INSERT INTO dict VALUE ('1','根字典','',1,2,0,0,0)

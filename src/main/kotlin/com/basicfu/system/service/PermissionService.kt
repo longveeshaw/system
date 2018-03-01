@@ -24,7 +24,7 @@ class PermissionService : BaseService<Permission>(Permission::class.java){
     @Autowired lateinit var prMapper: PermissionResourceMapper
 
     fun list(vo: PermissionVo): PageInfo<Any> {
-        val result = selectOrLike(arrayListOf("id", "name"), vo.keyword, vo.pageNum, vo.pageSize)
+        val result = selectPageDtoLike(arrayOf(arrayOf("id",vo.keyword), arrayOf("name",vo.keyword)), vo.pageNum, vo.pageSize)
         val pr= PermissionResource()
         result.list.forEach { e->
             e as PermissionDto
@@ -34,10 +34,10 @@ class PermissionService : BaseService<Permission>(Permission::class.java){
         }
         return result
     }
-    fun all():List<Any> = selectAllDto()
+    fun all():List<Any> = selectDto()
     fun insert(vo: PermissionVo):Int{
-        if(vo.id!=null&&selectCount("id",vo.id)>0)throw CustomException(Enum.Permission.EXIST_ID)
-        if(selectCount("name",vo.name)>0)throw CustomException(Enum.Permission.EXIST_NAME)
+        if(vo.id!=null&&selectCountEqual(arrayOf("id", vo.id))>0)throw CustomException(Enum.Permission.EXIST_ID)
+        if(selectCountEqual(arrayOf("name", vo.name))>0)throw CustomException(Enum.Permission.EXIST_NAME)
         val po= Permission()
         BeanUtils.copyProperties(vo,po)
         insertPoSelective(po)
@@ -52,7 +52,7 @@ class PermissionService : BaseService<Permission>(Permission::class.java){
         return 1
     }
     fun update(vo: PermissionVo):Int{
-        val checkPermission=selectOne("name",vo.name)
+        val checkPermission=selectOne(arrayOf("name",vo.name))
         if(checkPermission!=null&&checkPermission.id!=vo.id){
             throw CustomException(Enum.Permission.EXIST_NAME)
         }

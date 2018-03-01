@@ -46,7 +46,7 @@ class MenuService : BaseService<Menu>(Menu::class.java) {
     }
 
     fun list(vo: MenuVo): PageInfo<Any> {
-        val result = selectOrLike(arrayListOf("id","name","url"), vo.keyword, vo.pageNum, vo.pageSize)
+        val result = selectPageDtoLike(arrayOf(arrayOf("id",vo.keyword), arrayOf("name",vo.keyword), arrayOf("url",vo.keyword)), vo.pageNum, vo.pageSize)
         val map = selectAll().associateBy({ it.id }, { it })
         result.list.forEach{e->
             val menuDto = e as MenuDto
@@ -77,14 +77,14 @@ class MenuService : BaseService<Menu>(Menu::class.java) {
     }
 
     fun insert(vo: MenuVo): Int {
-        if (vo.id != null && selectCount("id", vo.id) > 0) throw CustomException(Enum.Menu.EXIST_ID)
-        if (selectCount("name", vo.name) > 0) throw CustomException(Enum.Menu.EXIST_NAME)
+        if (vo.id != null && selectCountEqual(arrayOf("id", vo.id)) > 0) throw CustomException(Enum.Menu.EXIST_ID)
+        if (selectCountEqual(arrayOf("name", vo.name)) > 0) throw CustomException(Enum.Menu.EXIST_NAME)
         return insertVoSelective(vo)
     }
 
     fun update(vo: MenuVo): Int {
         if(vo.id==vo.pid)throw CustomException(Enum.Menu.ID_PID_REPEAT)
-        val checkMenu=selectOne("name",vo.name)
+        val checkMenu=selectOne(arrayOf("name",vo.name))
         if(checkMenu!=null&&checkMenu.id!=vo.id){
             throw CustomException(Enum.Menu.EXIST_NAME)
         }
